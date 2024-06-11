@@ -1,17 +1,5 @@
 <template>
-  <wd-config-provider :themeVars="themeVars">
+  <view class="text-center p-4">
     <slot />
-    <wd-toast />
-    <wd-message-box />
-  </wd-config-provider>
+  </view>
 </template>
-
-<script lang="ts" setup>
-import type { ConfigProviderThemeVars } from 'wot-design-uni'
-
-const themeVars: ConfigProviderThemeVars = {
-  // colorTheme: 'red',
-  // buttonPrimaryBgColor: '#07c160',
-  // buttonPrimaryColor: '#07c160',
-}
-</script>

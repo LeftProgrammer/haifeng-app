@@ -13,6 +13,8 @@ onHide(() => {
 </script>
 
 <style lang="scss">
+@import '@/style/index';
+@import '@climblee/uv-ui/index';
 /* stylelint-disable selector-type-no-unknown */
 button::after {
   border: none;

@@ -53,6 +53,10 @@
       "style": {
         "navigationBarTitleText": "关于"
       }
+    },
+    {
+      "path": "pages/login/index",
+      "type": "page"
     }
   ],
   "subPackages": []

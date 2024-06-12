@@ -4,8 +4,7 @@ import { defineConfig } from 'unocss'
 import transformerDirectives from '@unocss/transformer-directives'
 import { presetShades } from '@viarotel-org/unocss-preset-shades'
 import { presetUni } from '@uni-helper/unocss-preset-uni'
-// import { primaryColor } from './src/configs/index.js'
-const primaryColor = '#028d71'
+import { primaryColor } from './src/configs/index'
 
 const presetMain = presetUni({ attributify: false })
 
@@ -15,7 +14,7 @@ export default defineConfig({
   theme: {},
   presets,
   transformers: [transformerDirectives()],
-
+  // 简写
   shortcuts: {
     'inset-center': 'absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2',
     'inset-x-center': 'absolute left-1/2 transform -translate-x-1/2',

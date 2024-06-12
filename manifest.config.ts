@@ -5,7 +5,7 @@ import { loadEnv } from 'vite'
 
 // 获取环境变量的范例
 const env = loadEnv(process.env.NODE_ENV!, path.resolve(process.cwd(), 'env'))
-// console.log(env)
+console.log('env===>', env)
 const {
   VITE_APP_TITLE,
   VITE_UNI_APPID,

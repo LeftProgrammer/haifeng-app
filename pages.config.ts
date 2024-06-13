@@ -11,7 +11,6 @@ export default defineUniPages({
   easycom: {
     autoscan: true,
     custom: {
-      // '^wd-(.*)': 'wot-design-uni/components/wd-$1/wd-$1.vue',
       '^uni-(.*)': '@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue',
       '^uv-(.*)': '@climblee/uv-ui/components/uv-$1/uv-$1.vue',
       '^(?!z-paging-refresh|z-paging-load-more)z-paging(.*)':
@@ -20,7 +19,7 @@ export default defineUniPages({
   },
   tabBar: {
     color: '#999999',
-    selectedColor: '#018d71',
+    selectedColor: '#3254FF',
     backgroundColor: '#F8F8F8',
     borderStyle: 'black',
     height: '50px',
@@ -31,14 +30,20 @@ export default defineUniPages({
       {
         iconPath: 'static/tabbar/home.png',
         selectedIconPath: 'static/tabbar/homeHL.png',
-        pagePath: 'pages/index/index',
+        pagePath: 'pages/home/index',
         text: '首页',
       },
       {
-        iconPath: 'static/tabbar/example.png',
-        selectedIconPath: 'static/tabbar/exampleHL.png',
-        pagePath: 'pages/about/about',
-        text: '关于',
+        iconPath: 'static/tabbar/todo.png',
+        selectedIconPath: 'static/tabbar/todoHL.png',
+        pagePath: 'pages/todo/index',
+        text: '待办',
+      },
+      {
+        iconPath: 'static/tabbar/mine.png',
+        selectedIconPath: 'static/tabbar/mineHL.png',
+        pagePath: 'pages/mine/index',
+        text: '我的',
       },
     ],
   },

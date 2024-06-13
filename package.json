@@ -1,22 +1,8 @@
 {
-  "name": "app",
+  "name": "haifeng-app",
   "type": "commonjs",
-  "version": "2.4.1",
-  "description": "unibest - 最好的 uniapp 开发模板",
-  "author": {
-    "name": "codercup",
-    "zhName": "菲鸽",
-    "email": "1020103647@qq.com",
-    "github": "https://github.com/codercup",
-    "gitee": "https://gitee.com/codercup"
-  },
-  "license": "MIT",
-  "repository": "https://github.com/codercup/unibest",
-  "repository-gitee": "https://gitee.com/codercup/unibest",
-  "bugs": {
-    "url": "https://github.com/codercup/unibest/issues"
-  },
-  "homepage": "https://codercup.github.io/unibest/",
+  "version": "1.0.0",
+  "description": "haifeng-app",
   "engines": {
     "node": ">=18",
     "pnpm": ">=7.30"

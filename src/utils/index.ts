@@ -66,6 +66,7 @@ export const getUrlObj = (url: string) => {
  * 如果没有传 key，则表示所有的pages，如果传递了 key, 则表示通过 key 过滤
  */
 export const getAllPages = (key = 'needLogin') => {
+  console.log('pages', pages)
   // 这里处理主包
   const mainPages = [
     ...pages
@@ -75,6 +76,7 @@ export const getAllPages = (key = 'needLogin') => {
         path: `/${page.path}`,
       })),
   ]
+  console.log('mainPages', mainPages)
   // 这里处理分包
   const subPages: any[] = []
   subPackages.forEach((subPageObj) => {

@@ -18,7 +18,7 @@
     </view>
 
     <view class="text-center text-4xl main-title-color mt-4">unibest12</view>
-    <uv-button type="primary" text="确定" @click="click"></uv-button>
+    <uv-button type="primary" text="确定" @click="click()"></uv-button>
     <uv-link href="https://www.uvui.cn" text="打开uv-ui文档"></uv-link>
     <uni-badge text="1"></uni-badge>
     <uni-link href="https://uniapp.dcloud.io/" text="https://uniapp.dcloud.io/"></uni-link>
@@ -54,7 +54,8 @@ onLoad(() => {
   console.log(author)
 })
 const click = () => {
-  uni.navigateTo({ url: '/pages/mine/index' })
+  console.log(111)
+  uni.navigateTo({ url: '/pages/login/index' })
 }
 </script>
 

@@ -10,7 +10,7 @@
     <view class="banner"></view>
     <view class="main">
       <view class="header">用户登录</view>
-      <uv-form ref="form" :model="form" :rules="rules" labelPosition="top">
+      <uv-form ref="formRef" :model="form" :rules="rules" labelPosition="top">
         <uv-form-item prop="username">
           <template v-slot:label>
             <view class="flex flex-justify-start flex-items-center">
@@ -51,7 +51,7 @@
     <view class="absolute inset-x-0 bottom-0 text-center mb-4 text-gray-400 text-sm">
       <view>
         Supported by
-        <text class="text-primary-500 underline active:text-primary-700" @click="handleInfo">
+        <text class="text-primary-500 active:text-primary-700" @click="handleInfo">
           {{ enterpriseInfo.name }}
         </text>
         v{{ version }}
@@ -60,85 +60,70 @@
   </view>
 </template>
 
-<script>
+<script lang="js" setup>
+import { ref } from 'vue'
 import { version } from '../../../package.json'
 import { appName, enterpriseInfo } from '@/configs/index'
-import coderJSON from '@/utils/coderJSON'
 import { postFooAPI } from '@/service/home/login'
+import { useUserStore } from '@/store'
 
-export default {
-  data() {
-    return {
-      appName,
-      enterpriseInfo,
-      version,
-      form: {
-        username: '',
-        password: '',
-      },
-      rememberMe: [],
-      rules: {
-        username: [
-          { type: 'string', required: true, message: '请输入用户名', trigger: ['blur', 'change'] },
-        ],
-        password: [
-          {
-            type: 'string',
-            required: true,
-            message: '密码由数字、字母和特殊符号组成，长度8-16位',
-            trigger: ['blur', 'change'],
-          },
-          // { min: 8, max: 16, message: '密码由数字、字母和特殊符号组成，长度8-16位', trigger: ['blur', 'change'] },
-          // { pattern: /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[~!@#$%^&*])[\da-zA-Z~!@#$%^&*]{8,16}$/ , message: '密码由数字、字母和特殊符号组成，长度8-16位', trigger: ['blur', 'change']}
-        ],
-      },
-    }
-  },
-  onShow() {},
-  methods: {
-    handleInfo() {
-      this.$Router.push({
-        path: '/webview',
-        query: {
-          title: 'viarotel',
-          src: 'https://viarotel.eu.org/',
-        },
-      })
-    },
-    async handleLogin() {
-      console.log('handleLogin', this.form)
-      const params = {}
-      params.username = this.form.username
-      params.password = this.form.password
+const formRef = ref(null)
+const userStore = useUserStore()
 
-      const { loading, error, data, run } = useRequest(() => getFooAPI(params))
-      // console
+const form = ref({
+  username: '',
+  password: '',
+})
+const rememberMe = ref([])
+const rules = ref({
+  username: [
+    { type: 'string', required: true, message: '请输入用户名', trigger: ['blur', 'change'] },
+  ],
+  password: [
+    {
+      type: 'string',
+      required: true,
+      message: '密码由数字、字母和特殊符号组成，长度8-16位',
+      trigger: ['blur', 'change'],
+    },
+  ],
+})
 
-      // await this.$store.user.login(params)
-      // await this.$toast('登录成功', { type: 'success' })
-      this.handleSuccess()
-    },
-    async handleSuccess() {
-      if (this.rememberMe.length > 0) {
-        // 如果用户选择了记住密码，你可以在这里将账号和密码保存到本地存储
-        uni.setStorageSync('username', this.form.username)
-        uni.setStorageSync('password', this.form.password)
-      }
-      // const user = this.$store.user
-      // try {
-      //   await user.getUserInfo()
-      //   if (this.$Route.query.redirect) {
-      //     const redirect = coderJSON.parse(this.$Route.query.redirect)
-      //     // console.log('redirect', redirect)
-      //     this.$Router.replaceAll(redirect)
-      //   } else {
-      //     this.$Router.replaceAll('/')
-      //   }
-      // } catch (error) {
-      //   console.warn('error', error)
-      // }
-    },
-  },
+const handleInfo = () => {
+  console.log('handleInfo')
+}
+
+const loginInfo = {
+  username: '用户昵称',
+  password: '用户头像URL',
+  token: '用户登录凭证',
+}
+
+const handleLogin = async () => {
+  const valid = await formRef.value.validate()
+  if (!valid) {
+    return
+  }
+  console.log('handleLogin', form.value)
+  const params = {
+    username: form.value.username,
+    password: form.value.password,
+  }
+
+  userStore.setUserInfo(loginInfo)
+  // const { loading, error, data, run } = useRequest(() => getFooAPI(params))
+
+  const isLogined = userStore.isLogined
+  console.log('isLogined', isLogined)
+
+  handleSuccess()
+}
+
+const handleSuccess = () => {
+  if (rememberMe.value.length > 0) {
+    uni.setStorageSync('username', form.value.username)
+    uni.setStorageSync('password', form.value.password)
+  }
 }
 </script>
 

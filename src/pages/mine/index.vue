@@ -1,9 +1,8 @@
-<route lang="json5" type="home">
+<route lang="json5">
 {
   style: {
     navigationBarTitleText: '我的',
   },
-  needLogin: true,
 }
 </route>
 

@@ -46,12 +46,12 @@
   },
   "pages": [
     {
-      "path": "pages/mine/index",
+      "path": "pages/home/index",
       "type": "home",
       "style": {
-        "navigationBarTitleText": "我的"
-      },
-      "needLogin": true
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "首页"
+      }
     },
     {
       "path": "pages/about/about",
@@ -61,19 +61,17 @@
       }
     },
     {
-      "path": "pages/home/index",
-      "type": "page",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "首页"
-      },
-      "needLogin": true
-    },
-    {
       "path": "pages/login/index",
       "type": "page",
       "style": {
         "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/mine/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "我的"
       }
     },
     {

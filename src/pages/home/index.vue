@@ -1,11 +1,10 @@
 <!-- 使用 type="home" 属性设置首页，其他页面不需要设置，默认为page；推荐使用json5，更强大，且允许注释 -->
-<route lang="json5">
+<route lang="json5" type="home">
 {
   style: {
     navigationStyle: 'custom',
     navigationBarTitleText: '首页',
   },
-  needLogin: true,
 }
 </route>
 <template>
@@ -17,10 +16,8 @@
       <image src="/static/logo.svg" alt="" class="w-28 h-28 block mx-auto" />
     </view>
 
-    <view class="text-center text-4xl main-title-color mt-4">unibest12</view>
-    <uv-button type="primary" text="确定" @click="click()"></uv-button>
-    <uv-link href="https://www.uvui.cn" text="打开uv-ui文档"></uv-link>
-    <uni-badge text="1"></uni-badge>
+    <view class="text-center text-4xl main-title-color mt-4">unibest</view>
+    <uv-button type="primary" text="确定" @click="handleClick"></uv-button>
     <uni-link href="https://uniapp.dcloud.io/" text="https://uniapp.dcloud.io/"></uni-link>
     <view class="text-center text-2xl mt-2 mb-8">最好用的 uniapp 开发模板</view>
 
@@ -53,8 +50,8 @@ const description = ref(
 onLoad(() => {
   console.log(author)
 })
-const click = () => {
-  console.log(111)
+const handleClick = () => {
+  console.log('handleClick')
   uni.navigateTo({ url: '/pages/login/index' })
 }
 </script>

@@ -22,8 +22,8 @@ onHide(() => {
 </script>
 
 <style lang="scss">
-@import '@/style/index';
-@import '@climblee/uv-ui/index';
+@import '@/style/index.scss';
+@import '@climblee/uv-ui/index.scss';
 /* stylelint-disable selector-type-no-unknown */
 button::after {
   border: none;

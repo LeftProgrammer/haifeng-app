@@ -6,7 +6,7 @@
 }
 </route>
 <template>
-  <view class="bg-white h-full overflow-hidden page">
+  <view class="page h-full bg-f8fcfd overflow-hidden">
     <view class="banner"></view>
     <view class="main">
       <view class="header">用户登录</view>
@@ -64,7 +64,7 @@
 import { ref } from 'vue'
 import { version } from '../../../package.json'
 import { appName, enterpriseInfo } from '@/configs/index'
-import { postFooAPI } from '@/service/home/login'
+import { login } from '@/service/home/login'
 import { useUserStore } from '@/store'
 
 const formRef = ref(null)
@@ -93,12 +93,6 @@ const handleInfo = () => {
   console.log('handleInfo')
 }
 
-const loginInfo = {
-  username: '用户昵称',
-  password: '用户头像URL',
-  token: '用户登录凭证',
-}
-
 const handleLogin = async () => {
   const valid = await formRef.value.validate()
   if (!valid) {
@@ -109,14 +103,17 @@ const handleLogin = async () => {
     username: form.value.username,
     password: form.value.password,
   }
+  const { code, message, result } = await login(params)
 
-  userStore.setUserInfo(loginInfo)
-  // const { loading, error, data, run } = useRequest(() => getFooAPI(params))
-
-  const isLogined = userStore.isLogined
-  console.log('isLogined', isLogined)
-
-  handleSuccess()
+  if (code === 200) {
+    const loginInfo = result.userInfo || {}
+    loginInfo.token = result.token
+    userStore.setUserInfo(loginInfo)
+    console.log('loginInfo', loginInfo)
+    const isLogined = userStore.isLogined
+    console.log('isLogined', isLogined)
+    handleSuccess()
+  }
 }
 
 const handleSuccess = () => {
@@ -130,7 +127,6 @@ const handleSuccess = () => {
 <style lang="scss" scoped>
 .page {
   position: relative;
-  background: #f8fcfd;
 }
 .banner {
   position: absolute;
@@ -138,7 +134,7 @@ const handleSuccess = () => {
   right: 0;
   left: 0;
   height: 318px;
-  background-image: url('@/static/home/banner.png');
+  background-image: url('@/static/login/banner.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;

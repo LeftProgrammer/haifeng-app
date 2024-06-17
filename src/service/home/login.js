@@ -1,6 +1,10 @@
 import { http } from '@/utils/http'
 
-/** POST 请求 */
-export const postFooAPI = (data) => {
-  return http.post('/foo', data, data)
+export const login = (data) => {
+  return http({
+    url: `/sys/login`,
+    method: 'POST',
+    params: data, // 注意：POST 请求应该使用 params 传递参数
+    data,
+  })
 }

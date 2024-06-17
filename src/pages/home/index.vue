@@ -3,37 +3,75 @@
 {
   style: {
     navigationStyle: 'custom',
-    navigationBarTitleText: '首页',
   },
 }
 </route>
 <template>
-  <view
-    class="bg-white overflow-hidden pt-2 px-4"
-    :style="{ marginTop: safeAreaInsets?.top + 'px' }"
-  >
-    <view class="mt-12">
-      <image src="/static/logo.svg" alt="" class="w-28 h-28 block mx-auto" />
-    </view>
-
-    <view class="text-center text-4xl main-title-color mt-4">unibest</view>
-    <uv-button type="primary" text="确定" @click="handleClick"></uv-button>
-    <uni-link href="https://uniapp.dcloud.io/" text="https://uniapp.dcloud.io/"></uni-link>
-    <view class="text-center text-2xl mt-2 mb-8">最好用的 uniapp 开发模板</view>
-
-    <view class="text-justify max-w-100 m-auto text-4 indent mb-2">{{ description }}</view>
-    <view class="text-center mt-8">
-      当前平台是：
-      <text class="text-green-500">{{ PLATFORM.platform }}</text>
-    </view>
-    <view class="text-center mt-4">
-      模板分支是：
-      <text class="text-green-500">base</text>
+  <view class="page h-full pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }">
+    <view class="banner"></view>
+    <view class="main">
+      <view class="header">
+        <view class="header-left">
+          <view class="avatar">
+            <uv-image
+              src="../../static/home/avator.png"
+              width="48px"
+              height="48px"
+              radius="4px"
+            ></uv-image>
+          </view>
+          <view class="userinfo">
+            <view class="userinfo-header">
+              <view class="name">你好，小熊</view>
+              <uv-tags class="tags" text="已登船" type="warning" shape="circle"></uv-tags>
+            </view>
+            <view class="tip">今日出航幸苦了！</view>
+          </view>
+        </view>
+      </view>
+      <view class="info">
+        <view class="info-left">
+          <view class="left-top">
+            <view class="img">云</view>
+            <view class="num">27</view>
+            <view class="top-right">
+              <view class="text unit">℃</view>
+              <view class="text weather">多云</view>
+            </view>
+          </view>
+          <view class="left-bottom">
+            <view class="bottom-item">
+              <view class="desc">东南风</view>
+              <view class="value">1级</view>
+            </view>
+            <view class="bottom-item">
+              <view class="desc">能见度</view>
+              <view class="value">9km</view>
+            </view>
+          </view>
+        </view>
+        <view class="info-right">
+          <view class="right-item">
+            <view class="item-img"></view>
+            <view class="item-right">
+              <view class="desc">我的通行码</view>
+              <view class="tips">出航请出示</view>
+            </view>
+          </view>
+          <view class="right-item">
+            <view class="item-img"></view>
+            <view class="item-right">
+              <view class="desc">我的通行码</view>
+              <view class="tips">出航请出示</view>
+            </view>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
 </template>
 
-<script lang="ts" setup>
+<script lang="js" setup>
 import PLATFORM from '@/utils/platform'
 
 defineOptions({
@@ -56,8 +94,174 @@ const handleClick = () => {
 }
 </script>
 
-<style>
-.main-title-color {
-  color: #d14328;
+<style lang="scss" scoped>
+.page {
+  position: relative;
+  background: #e9edf6;
+}
+.banner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 408px;
+  background-image: url('@/static/home/banner.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+.main {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  padding: 18px 8px;
+}
+.header {
+  display: flex;
+  color: #fff;
+  .header-left {
+    display: flex;
+  }
+  .avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    padding: 2px;
+    margin-right: 12px;
+    background: #fff;
+    border-radius: 4px;
+  }
+  .userinfo {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .userinfo-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    height: 28px;
+    font-size: 20px;
+    .tags {
+      margin-left: 16px;
+      font-size: 16px;
+    }
+  }
+  .tip {
+    font-size: 14px;
+  }
+}
+.info {
+  display: flex;
+  justify-content: space-between;
+  height: 140px;
+  margin-top: 22px;
+  .info-left {
+    // height: 100%;
+    // width: 181px;
+    // flex-shrink: 0;
+    position: relative;
+    padding: 12px 20px;
+    color: #fff;
+    background: linear-gradient(180deg, #4b88ff 0%, #2041e4 100%);
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0px 4px 8px 0px rgba(37, 70, 233, 0.32);
+    .left-top {
+      display: flex;
+      align-items: center;
+    }
+    .img {
+      width: 48px;
+      height: 48px;
+    }
+    .num {
+      margin-left: 16px;
+      font-size: 32px;
+    }
+    .top-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      height: 100%;
+      margin-left: 7px;
+      .text {
+        font-size: 14px;
+      }
+    }
+    .left-bottom {
+      position: absolute;
+      top: 68px;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      // z-index: 10;
+      padding: 9px 20px;
+      // height: 72px;
+      background: linear-gradient(180deg, #ffffff 0%, #267fe6 100%);
+      border-radius: 4px 4px 4px 4px;
+      .bottom-item {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+      }
+      .desc {
+        height: 24px;
+        padding: 0 6px;
+        line-height: 24px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 2px 2px 2px 2px;
+      }
+      .value {
+        margin-left: 12px;
+      }
+    }
+  }
+  .info-right {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 10px;
+    .right-item {
+      display: flex;
+      // width: 100%;
+      height: 42px;
+      padding: 12px 8px;
+      background: #ffffff;
+      border-radius: 4px 4px 4px 4px;
+      .item-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 14px 14px 14px 14px;
+      }
+      .item-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-left: 12px;
+      }
+      .desc {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 20px;
+        color: #1d2129;
+      }
+      .value {
+        font-size: 12px;
+        line-height: 20px;
+      }
+    }
+  }
 }
 </style>

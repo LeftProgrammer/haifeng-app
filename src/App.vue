@@ -3,18 +3,18 @@ import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
 import { checkAndRedirect } from '@/interceptors/route'
 
 onLaunch(() => {
-  // console.log('App Launch')
-  // const pages = getCurrentPages()
-  // const currentPage = pages[pages.length - 1]
-  // const url = '/' + currentPage.route
-  // checkAndRedirect(url)
+  console.log('App Launch')
+  const pages = getCurrentPages()
+  const currentPage = pages[pages.length - 1]
+  const url = '/' + currentPage.route
+  checkAndRedirect(url)
 })
 onShow(() => {
-  // console.log('App Show')
-  // const pages = getCurrentPages()
-  // const currentPage = pages[pages.length - 1]
-  // const url = '/' + currentPage.route
-  // checkAndRedirect(url)
+  console.log('App Show')
+  const pages = getCurrentPages()
+  const currentPage = pages[pages.length - 1]
+  const url = '/' + currentPage.route
+  checkAndRedirect(url)
 })
 onHide(() => {
   console.log('App Hide')
@@ -24,17 +24,16 @@ onHide(() => {
 <style lang="scss">
 @import '@/style/index.scss';
 @import '@climblee/uv-ui/index.scss';
-/* stylelint-disable selector-type-no-unknown */
 button::after {
   border: none;
 }
 
-swiper,
-scroll-view {
-  flex: 1;
-  height: 100%;
-  overflow: hidden;
-}
+// swiper,
+// scroll-view {
+//   flex: 1;
+//   height: 100%;
+//   overflow: hidden;
+// }
 
 image {
   width: 100%;

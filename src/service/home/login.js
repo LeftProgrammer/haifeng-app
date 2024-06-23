@@ -8,3 +8,12 @@ export const login = (data) => {
     data,
   })
 }
+
+export const queryByUsername = (data) => {
+  return http({
+    url: `/personmanagement/personInfo/queryByUsername
+`,
+    method: 'GET',
+    query: data,
+  })
+}

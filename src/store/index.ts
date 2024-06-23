@@ -5,8 +5,8 @@ const store = createPinia()
 store.use(
   createPersistedState({
     storage: {
-      getItem: uni.getStorageSync,
-      setItem: uni.setStorageSync,
+      getItem: (key: string) => uni.getStorageSync(key),
+      setItem: (key: string, value: any) => uni.setStorageSync(key, value),
     },
   }),
 )
@@ -15,4 +15,6 @@ export default store
 
 // 模块统一导出
 export * from './user'
-export * from './count'
+export * from './app'
+export * from './inspection'
+export * from './dict'

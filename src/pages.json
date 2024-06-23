@@ -41,6 +41,12 @@
         "selectedIconPath": "static/tabbar/mineHL.png",
         "pagePath": "pages/mine/index",
         "text": "我的"
+      },
+      {
+        "iconPath": "static/tabbar/mine.png",
+        "selectedIconPath": "static/tabbar/mineHL.png",
+        "pagePath": "pages/login/index",
+        "text": "登录"
       }
     ]
   },
@@ -60,6 +66,41 @@
       }
     },
     {
+      "path": "pages/application/index",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/construction/details",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "工序填报"
+      }
+    },
+    {
+      "path": "pages/construction/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "施工"
+      }
+    },
+    {
+      "path": "pages/construction/processList",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "工序列表"
+      }
+    },
+    {
+      "path": "pages/inspection/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "检核"
+      }
+    },
+    {
       "path": "pages/login/index",
       "type": "page",
       "style": {
@@ -71,6 +112,20 @@
       "type": "page",
       "style": {
         "navigationBarTitleText": "我的"
+      }
+    },
+    {
+      "path": "pages/notice/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "通知"
+      }
+    },
+    {
+      "path": "pages/QRCode/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "通行码"
       }
     },
     {
@@ -86,6 +141,27 @@
       "type": "page",
       "style": {
         "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/windShelter/notice/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "避风通知"
+      }
+    },
+    {
+      "path": "pages/windShelter/report/detail",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "避风报备"
+      }
+    },
+    {
+      "path": "pages/windShelter/report/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "避风报备"
       }
     }
   ],

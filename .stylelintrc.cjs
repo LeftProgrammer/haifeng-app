@@ -6,8 +6,8 @@ module.exports = {
     // stylelint-config-standard 替换成了更宽松的 stylelint-config-recommended
     'stylelint-config-recommended',
     // stylelint-config-standard-scss 替换成了更宽松的 stylelint-config-recommended-scss
-    'stylelint-config-recommended-scss',
-    'stylelint-config-recommended-vue/scss',
+    // 'stylelint-config-recommended-scss', // 会格式化.scss文件引入后缀名
+    // 'stylelint-config-recommended-vue/scss',
     'stylelint-config-html/vue',
     'stylelint-config-recess-order',
   ],
@@ -49,9 +49,9 @@ module.exports = {
     'comment-empty-line-before': 'never', // never|always|always-multi-line|never-multi-line
     'custom-property-empty-line-before': 'never',
     'no-empty-source': null,
-    'comment-no-empty': null,
     'no-duplicate-selectors': null,
-    'scss/comment-no-empty': null,
+    // 'comment-no-empty': null,
+    // 'scss/comment-no-empty': null,
     'selector-class-pattern': null,
     'font-family-no-missing-generic-family-keyword': null,
   },

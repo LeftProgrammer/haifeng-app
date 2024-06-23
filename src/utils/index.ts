@@ -1,4 +1,3 @@
-// @ts-expect-error import json file
 import { pages, subPackages, tabBar } from '@/pages.json'
 
 /** 判断当前页面是否是tabbar页  */
@@ -50,14 +49,16 @@ const ensureDecodeURIComponent = (url: string) => {
  */
 export const getUrlObj = (url: string) => {
   const [path, queryStr] = url.split('?')
-  console.log(path, queryStr)
 
   const query: Record<string, string> = {}
-  queryStr.split('&').forEach((item) => {
-    const [key, value] = item.split('=')
-    console.log(key, value)
-    query[key] = ensureDecodeURIComponent(value) // 这里需要统一 decodeURIComponent 一下，可以兼容h5和微信y
-  })
+  // 判断 queryStr 是否存在，避免报错
+  if (queryStr) {
+    queryStr.split('&').forEach((item) => {
+      const [key, value] = item.split('=')
+      query[key] = ensureDecodeURIComponent(value)
+    })
+  }
+
   return { path, query }
 }
 /**

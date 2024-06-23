@@ -64,8 +64,10 @@
 import { ref } from 'vue'
 import { version } from '../../../package.json'
 import { appName, enterpriseInfo } from '@/configs/index'
-import { login } from '@/service/home/login'
+import { login, queryByUsername } from '@/service/home/login'
 import { useUserStore } from '@/store'
+import { useToast } from '@/utils/modals'
+import { getUrlObj } from '@/utils/index'
 
 const formRef = ref(null)
 const userStore = useUserStore()
@@ -109,10 +111,35 @@ const handleLogin = async () => {
     const loginInfo = result.userInfo || {}
     loginInfo.token = result.token
     userStore.setUserInfo(loginInfo)
-    console.log('loginInfo', loginInfo)
-    const isLogined = userStore.isLogined
-    console.log('isLogined', isLogined)
-    handleSuccess()
+
+    const {
+      code: companyCode,
+      message: companyMessage,
+      result: companyResult,
+    } = await queryByUsername({})
+    console.log('companyResult', companyResult)
+
+    if (companyCode === 200) {
+      loginInfo.name = companyResult.name
+      loginInfo.department = companyResult.department
+      loginInfo.departmentId = companyResult.departmentId
+      loginInfo.code = companyResult.code
+      userStore.setUserInfo(loginInfo)
+      const isLogined = userStore.isLogined
+      console.log('isLogined', isLogined)
+
+      const currentRoute = getCurrentPages().pop().route
+      console.error('currentRoute', currentRoute)
+      const { query } = getUrlObj(currentRoute)
+      const redirectUrl = query.redirect || '/'
+      uni.reLaunch({
+        url: redirectUrl,
+      })
+      useToast('登录成功')
+      handleSuccess()
+    } else {
+      useToast('登录失败')
+    }
   }
 }
 

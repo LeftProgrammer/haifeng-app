@@ -19,6 +19,7 @@ const isLogined = () => {
 const isDev = import.meta.env.DEV
 
 export const checkAndRedirect = (url) => {
+  console.error('url', url)
   const path = url.split('?')[0]
   let needLoginPages: string[] = []
   if (isDev) {
@@ -80,6 +81,6 @@ export const routeInterceptor = {
     uni.addInterceptor('navigateTo', navigateToInterceptor)
     uni.addInterceptor('reLaunch', navigateToInterceptor)
     uni.addInterceptor('redirectTo', navigateToInterceptor)
-    uni.addInterceptor('navigateBack', navigateToInterceptor)
+    // uni.addInterceptor('navigateBack', navigateToInterceptor)
   },
 }

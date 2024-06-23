@@ -6,15 +6,25 @@
 interface NavigateToOptions {
   url: "/pages/home/index" |
        "/pages/about/about" |
+       "/pages/application/index" |
+       "/pages/construction/details" |
+       "/pages/construction/index" |
+       "/pages/construction/processList" |
+       "/pages/inspection/index" |
        "/pages/login/index" |
        "/pages/mine/index" |
+       "/pages/notice/index" |
+       "/pages/QRCode/index" |
        "/pages/statement/index" |
-       "/pages/todo/index";
+       "/pages/todo/index" |
+       "/pages/windShelter/notice/index" |
+       "/pages/windShelter/report/detail" |
+       "/pages/windShelter/report/index";
 }
 interface RedirectToOptions extends NavigateToOptions {}
 
 interface SwitchTabOptions {
-  url: "/pages/home/index" | "/pages/todo/index" | "/pages/mine/index"
+  url: "/pages/home/index" | "/pages/todo/index" | "/pages/mine/index" | "/pages/login/index"
 }
 
 type ReLaunchOptions = NavigateToOptions | SwitchTabOptions;

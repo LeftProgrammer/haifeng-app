@@ -5,7 +5,7 @@ export const shipList = (data) => {
   return http({
     url: '/sailingcheck/shipSailingRecord/shipList',
     method: 'GET',
-    query: data,
+    data,
   })
 }
 
@@ -14,7 +14,6 @@ export const shipLeave = (data) => {
   return http({
     url: `/sailingcheck/shipSailingRecord/leave`,
     method: 'POST',
-    params: data, // 注意：POST 请求应该使用 params 传递参数
     data,
   })
 }
@@ -24,7 +23,6 @@ export const shipBack = (data) => {
   return http({
     url: `/sailingcheck/shipSailingRecord/back`,
     method: 'POST',
-    params: data, // 注意：POST 请求应该使用 params 传递参数
     data,
   })
 }
@@ -34,6 +32,6 @@ export const shipUsers = (data) => {
   return http({
     url: '/sailingcheck/shipSailingRecord/shipUsers',
     method: 'GET',
-    query: data,
+    data,
   })
 }

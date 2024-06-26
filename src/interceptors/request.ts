@@ -2,6 +2,7 @@
 import qs from 'qs'
 import { useUserStore } from '@/store'
 import { platform } from '@/utils/platform'
+import { checkAndRedirect } from '@/interceptors/route'
 
 export type CustomRequestOptions = UniApp.RequestOptions & {
   query?: Record<string, any>
@@ -11,7 +12,6 @@ export type CustomRequestOptions = UniApp.RequestOptions & {
 
 // 请求基准地址
 const baseUrl = import.meta.env.VITE_SERVER_BASEURL
-
 // 拦截器配置
 const httpInterceptor = {
   // 拦截前触发
@@ -50,10 +50,26 @@ const httpInterceptor = {
     }
     // 3. 添加 token 请求头标识
     const userStore = useUserStore()
-    const { token } = userStore.userInfo as unknown as IUserInfo
+    const token = userStore.token
     if (token) {
       options.header['X-Access-Token'] = token
     }
+  },
+  success(args) {
+    console.log('interceptor-success', args)
+    if (args.statusCode === 500) {
+      if (args.data.message.indexOf('Token失效') >= 0) {
+        const userStore = useUserStore()
+        userStore.clearToken()
+        checkAndRedirect()
+      }
+    }
+  },
+  fail(err) {
+    console.log('interceptor-fail', err)
+  },
+  complete(res) {
+    // console.log('interceptor-complete', res)
   },
 }
 

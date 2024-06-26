@@ -1,4 +1,6 @@
 import { CustomRequestOptions } from '@/interceptors/request'
+import { useUserStore } from '@/store'
+import { checkAndRedirect } from '@/interceptors/route'
 
 export const http = <T>(options: CustomRequestOptions) => {
   // 1. 返回 Promise 对象
@@ -14,18 +16,26 @@ export const http = <T>(options: CustomRequestOptions) => {
         // 状态码 2xx，参考 axios 的设计
         if (res.statusCode >= 200 && res.statusCode < 300) {
           // 2.1 提取核心数据 res.data
-          resolve(res.data as IResData<T>)
+          if (res.data && res.data.code === 505) {
+            const userStore = useUserStore()
+            userStore.clearToken()
+            checkAndRedirect()
+          } else {
+            resolve(res.data as IResData<T>)
+          }
         } else if (res.statusCode === 401) {
           // 401错误  -> 清理用户信息，跳转到登录页
           // userStore.clearUserInfo()
           // uni.navigateTo({ url: '/pages/login/index' })
+
           reject(res)
         } else {
+          console.error(11111111)
           // 其他错误 -> 根据后端错误信息轻提示
           !options.hideErrorToast &&
             uni.showToast({
               icon: 'none',
-              title: (res.data as IResData<T>).msg || '请求错误',
+              title: (res.data as IResData<T>).message || '请求错误',
             })
           reject(res)
         }

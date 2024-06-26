@@ -41,12 +41,6 @@
         "selectedIconPath": "static/tabbar/mineHL.png",
         "pagePath": "pages/mine/index",
         "text": "我的"
-      },
-      {
-        "iconPath": "static/tabbar/mine.png",
-        "selectedIconPath": "static/tabbar/mineHL.png",
-        "pagePath": "pages/login/index",
-        "text": "登录"
       }
     ]
   },
@@ -56,7 +50,8 @@
       "type": "home",
       "style": {
         "navigationStyle": "custom"
-      }
+      },
+      "needLogin": true
     },
     {
       "path": "pages/about/about",
@@ -73,7 +68,7 @@
       }
     },
     {
-      "path": "pages/construction/details",
+      "path": "pages/construction/detail",
       "type": "page",
       "style": {
         "navigationBarTitleText": "工序填报"
@@ -87,7 +82,7 @@
       }
     },
     {
-      "path": "pages/construction/processList",
+      "path": "pages/construction/list",
       "type": "page",
       "style": {
         "navigationBarTitleText": "工序列表"
@@ -115,18 +110,12 @@
       }
     },
     {
-      "path": "pages/notice/index",
-      "type": "page",
-      "style": {
-        "navigationBarTitleText": "通知"
-      }
-    },
-    {
       "path": "pages/QRCode/index",
       "type": "page",
       "style": {
         "navigationBarTitleText": "通行码"
-      }
+      },
+      "needLogin": true
     },
     {
       "path": "pages/statement/index",
@@ -141,6 +130,27 @@
       "type": "page",
       "style": {
         "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/weather/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "天气预报"
+      }
+    },
+    {
+      "path": "pages/weather/weatherTrend",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "天气趋势"
+      }
+    },
+    {
+      "path": "pages/windShelter/notice/detail",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "新增避风通知"
       }
     },
     {

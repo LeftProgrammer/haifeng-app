@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref, onMounted, nextTick, computed } from 'vue'
+import { defineEmits, ref, onMounted, nextTick, computed } from 'vue'
 
 const props = defineProps({
   // 组件标题

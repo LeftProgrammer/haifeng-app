@@ -79,7 +79,7 @@ onShow(async () => {
 
 const handleClick = (item) => {
   uni.navigateTo({
-    url: `/pages/construction/processList?pbsId=${item.id}`,
+    url: `/pages/construction/list?pbsId=${item.id}`,
   })
 }
 </script>

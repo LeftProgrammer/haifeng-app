@@ -9,7 +9,7 @@ module.exports = {
     // 'stylelint-config-recommended-scss', // 会格式化.scss文件引入后缀名
     // 'stylelint-config-recommended-vue/scss',
     'stylelint-config-html/vue',
-    'stylelint-config-recess-order',
+    // 'stylelint-config-recess-order', // 按照 Recess 的 CSS 属性顺序规则来格式化
   ],
   plugins: ['stylelint-prettier'],
   overrides: [

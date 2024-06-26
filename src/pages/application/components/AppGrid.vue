@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, computed, useAttrs } from 'vue'
+import { computed, useAttrs } from 'vue'
 import { useAppStore, AppItem } from '@/store/app'
 import { useToast } from '@/utils/modals/index'
 

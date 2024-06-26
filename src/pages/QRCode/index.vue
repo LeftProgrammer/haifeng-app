@@ -3,6 +3,7 @@
   style: {
     navigationBarTitleText: '通行码',
   },
+  needLogin: true,
 }
 </route>
 

@@ -2,24 +2,30 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 const initState = {
-  nickname: '',
+  id: '',
   avatar: '',
   username: '',
   name: '',
   departmentId: '',
   department: '',
-  token: '',
+  code: '',
 }
 
 export const useUserStore = defineStore(
   'user',
   () => {
     const userInfo = ref<IUserInfo>({ ...initState })
+    const token = ref('')
 
+    const setToken = (val) => {
+      token.value = val
+    }
+    const clearToken = () => {
+      token.value = ''
+    }
     const setUserInfo = (val: IUserInfo) => {
       userInfo.value = val
     }
-
     const clearUserInfo = () => {
       userInfo.value = { ...initState }
     }
@@ -27,9 +33,12 @@ export const useUserStore = defineStore(
     const reset = () => {
       userInfo.value = { ...initState }
     }
-    const isLogined = computed(() => !!userInfo.value.token)
+    const isLogined = computed(() => !!token.value)
 
     return {
+      token,
+      setToken,
+      clearToken,
       userInfo,
       setUserInfo,
       clearUserInfo,

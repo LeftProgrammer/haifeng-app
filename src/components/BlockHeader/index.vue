@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 
 const props = defineProps({
   title: {

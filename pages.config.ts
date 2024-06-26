@@ -45,12 +45,12 @@ export default defineUniPages({
         pagePath: 'pages/mine/index',
         text: '我的',
       },
-      {
-        iconPath: 'static/tabbar/mine.png',
-        selectedIconPath: 'static/tabbar/mineHL.png',
-        pagePath: 'pages/login/index',
-        text: '登录',
-      },
+      // {
+      //   iconPath: 'static/tabbar/mine.png',
+      //   selectedIconPath: 'static/tabbar/mineHL.png',
+      //   pagePath: 'pages/login/index',
+      //   text: '登录',
+      // },
     ],
   },
 })

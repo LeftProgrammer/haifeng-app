@@ -7,10 +7,10 @@ export interface Person {
   avatar?: string
   departmentId?: string
   departmentName?: string
+  result?: string
+  remark?: string
   onboarded?: boolean
   offboarded?: boolean
-  reason?: string
-  reasonType?: string
 }
 
 export interface ShipData {
@@ -19,6 +19,7 @@ export interface ShipData {
   departmentId?: string
   departmentName?: string
   inspector?: string
+  inspectorName?: string
   users: Person[]
 }
 
@@ -41,10 +42,27 @@ export const useInspectionStore = defineStore(
           departmentId: '',
           departmentName: '',
           inspector: '', // 根据实际情况设置核检员
+          inspectorName: '',
           users: [],
         }
       }
       allShipData.value[shipId].users.push(person)
+    }
+
+    // 修改指定船只中指定人员的数据
+    const updatePerson = (
+      shipId: string,
+      personId: string,
+      updatedPerson: Partial<Person>,
+    ): void => {
+      const shipData = allShipData.value[shipId]
+      if (shipData) {
+        const personIndex = shipData.users.findIndex((p) => p.userId === personId)
+        if (personIndex !== -1) {
+          // 使用 Object.assign 更新人员信息
+          Object.assign(shipData.users[personIndex], updatedPerson)
+        }
+      }
     }
 
     // 从指定船只中移除人员
@@ -71,6 +89,7 @@ export const useInspectionStore = defineStore(
       allShipData,
       getShipData,
       addPerson,
+      updatePerson,
       removePerson,
       clearShipData,
       clearAllShipData,

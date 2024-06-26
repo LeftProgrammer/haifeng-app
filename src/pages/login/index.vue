@@ -108,10 +108,8 @@ const handleLogin = async () => {
   const { code, message, result } = await login(params)
 
   if (code === 200) {
-    const loginInfo = result.userInfo || {}
-    loginInfo.token = result.token
-    userStore.setUserInfo(loginInfo)
-
+    let userInfo = result.userInfo || {}
+    userStore.setToken(result.token)
     const {
       code: companyCode,
       message: companyMessage,
@@ -120,11 +118,8 @@ const handleLogin = async () => {
     console.log('companyResult', companyResult)
 
     if (companyCode === 200) {
-      loginInfo.name = companyResult.name
-      loginInfo.department = companyResult.department
-      loginInfo.departmentId = companyResult.departmentId
-      loginInfo.code = companyResult.code
-      userStore.setUserInfo(loginInfo)
+      userInfo = { ...userInfo, ...companyResult }
+      userStore.setUserInfo(userInfo)
       const isLogined = userStore.isLogined
       console.log('isLogined', isLogined)
 

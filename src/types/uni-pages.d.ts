@@ -7,16 +7,18 @@ interface NavigateToOptions {
   url: "/pages/home/index" |
        "/pages/about/about" |
        "/pages/application/index" |
-       "/pages/construction/details" |
+       "/pages/construction/detail" |
        "/pages/construction/index" |
-       "/pages/construction/processList" |
+       "/pages/construction/list" |
        "/pages/inspection/index" |
        "/pages/login/index" |
        "/pages/mine/index" |
-       "/pages/notice/index" |
        "/pages/QRCode/index" |
        "/pages/statement/index" |
        "/pages/todo/index" |
+       "/pages/weather/index" |
+       "/pages/weather/weatherTrend" |
+       "/pages/windShelter/notice/detail" |
        "/pages/windShelter/notice/index" |
        "/pages/windShelter/report/detail" |
        "/pages/windShelter/report/index";
@@ -24,7 +26,7 @@ interface NavigateToOptions {
 interface RedirectToOptions extends NavigateToOptions {}
 
 interface SwitchTabOptions {
-  url: "/pages/home/index" | "/pages/todo/index" | "/pages/mine/index" | "/pages/login/index"
+  url: "/pages/home/index" | "/pages/todo/index" | "/pages/mine/index"
 }
 
 type ReLaunchOptions = NavigateToOptions | SwitchTabOptions;

@@ -18,8 +18,15 @@ const isLogined = () => {
 
 const isDev = import.meta.env.DEV
 
-export const checkAndRedirect = (url) => {
+export const checkAndRedirect = (url?: string) => {
   console.error('url', url)
+
+  if (!url) {
+    const pages = getCurrentPages()
+    const currentPage = pages[pages.length - 1]
+    url = '/' + currentPage.route
+  }
+  console.error('url==========', url)
   const path = url.split('?')[0]
   let needLoginPages: string[] = []
   if (isDev) {
@@ -35,8 +42,10 @@ export const checkAndRedirect = (url) => {
   if (hasLogin) {
     return true
   }
+
   const redirectRoute = `${loginRoute}?redirect=${encodeURIComponent(url)}`
-  uni.navigateTo({ url: redirectRoute })
+  uni.redirectTo({ url: redirectRoute })
+  console.log('页面重定向', redirectRoute)
   return false
 }
 

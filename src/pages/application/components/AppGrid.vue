@@ -1,30 +1,37 @@
 <template>
   <view class="app-grid">
     <view v-if="title" class="grid-title">{{ title }}</view>
-    <uv-grid :col="col" :border="false" :square="false">
+    <uv-grid :col="col" :border="false" :square="false" v-if="apps.length > 0">
       <uv-grid-item v-for="(app, index) in apps" :key="index" @click="handleAppClick(app)">
         <view class="grid-item">
           <view class="icon-wrap relative">
-            <uv-icon class="item-image" :name="app.icon" color="#3254FF" size="40" />
+            <uv-icon
+              class="item-image"
+              :name="app.icon"
+              color="#3254FF"
+              size="40"
+              :customStyle="{ paddingTop: 20 + 'rpx' }"
+            />
             <view
-              v-if="editable && removable && isRemovable(app)"
-              class="delete-btn absolute top-0 right-0"
+              v-if="isRemovable"
+              class="delete-btn absolute top-1 right-0"
               @click.stop="handleRemoveApp(app)"
             >
-              <uv-icon name="minus-circle" color="#F56C6C" size="18" />
+              <uv-icon name="minus-circle" color="#CBCBCB" size="18" />
             </view>
             <view
-              v-if="editable && !removable && isAddable(app)"
-              class="add-btn absolute top-0 right-0"
+              v-if="isAddable(app)"
+              class="add-btn absolute top-1 right-0"
               @click.stop="handleAddApp(app)"
             >
-              <uv-icon name="plus-circle" color="#67C23A" size="18" />
+              <uv-icon name="plus-circle" color="#3254FF" size="18" />
             </view>
           </view>
           <text class="app-name text-xs text-gray-600 mt-2">{{ app.name }}</text>
         </view>
       </uv-grid-item>
     </uv-grid>
+    <view v-else>暂无数据</view>
   </view>
 </template>
 
@@ -39,7 +46,7 @@ const props = defineProps<{
   apps: AppItem[]
   col: number
   editable: boolean
-  removable?: boolean // 是否可移除
+  homeApps?: AppItem[] // 首页应用
 }>()
 
 // 定义 emits
@@ -47,23 +54,17 @@ const emit = defineEmits(['add', 'remove'])
 
 // 计算是否可添加
 const isAddable = computed(() => (app: AppItem) => {
-  if (props.removable) return false
-  return !isHomeApp(app.id)
+  return props.editable && !isHomeApp(app.id)
 })
 
 // 计算是否可移除
-const isRemovable = computed(() => (app: AppItem) => {
-  if (!props.removable) return false
-  return isHomeApp(app.id)
+const isRemovable = computed(() => {
+  return props.editable && !props.homeApps
 })
-
-const attrs = useAttrs()
-const appStore = useAppStore()
-const editingHomeApps = computed(() => appStore.editingHomeApps)
 
 // 判断应用是否已存在于首页
 const isHomeApp = (appId: string) => {
-  return editingHomeApps.value.some((app) => app.id === appId)
+  return props.homeApps && props.homeApps.some((app) => app.id === appId)
 }
 
 const handleAppClick = (app: AppItem) => {
@@ -93,22 +94,6 @@ const handleRemoveApp = (app: AppItem) => {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    .icon-wrap {
-      width: 48px;
-      height: 48px;
-    }
-
-    .app-icon {
-      width: 100%;
-      height: 100%;
-    }
-
-    .add-btn,
-    .delete-btn {
-      top: 5px;
-      right: 5px;
-    }
   }
 }
 </style>

@@ -11,7 +11,7 @@ export const getDetail = (data) => {
 // 获取联系人
 export const getPerson = (data) => {
   return http({
-    url: '/personmanagement/personInfo/listNoPage',
+    url: '/person/personInfo/listNoPage',
     method: 'GET',
     params: data,
   })
@@ -27,7 +27,7 @@ export const getPort = (data) => {
 // 获取用户信息
 export const getUser = (data) => {
   return http({
-    url: '/personmanagement/personInfo/queryByUsername',
+    url: '/person/personInfo/queryByUsername',
     method: 'GET',
     params: data,
   })

@@ -6,7 +6,7 @@
 }
 </route>
 <template>
-  <view class="bg-#f5f5f5 h-100% px-2 pt-2.5 box-border overflow-auto">
+  <view class="bg-#f5f5f5 h-100% px-2 pt-2.5 box-border">
     <view
       v-for="item in list"
       :key="item.id"
@@ -59,7 +59,7 @@
 <script setup>
 import { getwindShelter } from '@/service/windShelter/report/index.js'
 import dayjs from 'dayjs'
-import { onLoad, onShow } from '@dcloudio/uni-app'
+import { onLoad, onShow, onReachBottom } from '@dcloudio/uni-app'
 const list = ref([])
 onShow(() => {
   getList()
@@ -100,7 +100,6 @@ const routerTo = (item) => {
 
 <style lang="scss" scoped>
 .title-bg {
-  background: linear-gradient(360deg, rgba(157, 214, 255, 0.16) 20%, rgb(50 84 255 / 16%) 100%);
-  box-shadow: 0px 4px 6px 0px rgba(152, 178, 244, 0.1);
+  background: linear-gradient(360deg, rgba(157, 214, 255, 0.03) 20%, rgb(50, 84, 255, 0.16) 100%);
 }
 </style>

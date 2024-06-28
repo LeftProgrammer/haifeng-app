@@ -89,6 +89,24 @@
       }
     },
     {
+      "path": "pages/dolphinWatch/dataForm",
+      "type": "page"
+    },
+    {
+      "path": "pages/dolphinWatch/detail",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "观豚日志"
+      }
+    },
+    {
+      "path": "pages/dolphinWatch/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "观豚日志"
+      }
+    },
+    {
       "path": "pages/inspection/index",
       "type": "page",
       "style": {
@@ -129,8 +147,9 @@
       "path": "pages/todo/index",
       "type": "page",
       "style": {
-        "navigationStyle": "custom"
-      }
+        "navigationBarTitleText": "待办"
+      },
+      "needLogin": true
     },
     {
       "path": "pages/weather/index",
@@ -144,6 +163,13 @@
       "type": "page",
       "style": {
         "navigationBarTitleText": "天气趋势"
+      }
+    },
+    {
+      "path": "pages/weather/weatherWarn",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "气象预警"
       }
     },
     {

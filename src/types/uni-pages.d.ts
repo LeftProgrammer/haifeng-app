@@ -10,6 +10,9 @@ interface NavigateToOptions {
        "/pages/construction/detail" |
        "/pages/construction/index" |
        "/pages/construction/list" |
+       "/pages/dolphinWatch/dataForm" |
+       "/pages/dolphinWatch/detail" |
+       "/pages/dolphinWatch/index" |
        "/pages/inspection/index" |
        "/pages/login/index" |
        "/pages/mine/index" |
@@ -18,6 +21,7 @@ interface NavigateToOptions {
        "/pages/todo/index" |
        "/pages/weather/index" |
        "/pages/weather/weatherTrend" |
+       "/pages/weather/weatherWarn" |
        "/pages/windShelter/notice/detail" |
        "/pages/windShelter/notice/index" |
        "/pages/windShelter/report/detail" |

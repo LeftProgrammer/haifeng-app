@@ -7,7 +7,7 @@
 </route>
 
 <template>
-  <view class="page bg-#F5F5F5 overflow-hidden">
+  <view class="bg-#f5f5f5 h-full box-border relative overflow-hidden">
     <view class="bg-#fff px-4">
       <uv-form labelPosition="left" label-width="100">
         <uv-form-item label="核检船舶" prop="ship" @click="handleShowShipPicker" required>
@@ -30,81 +30,92 @@
         ></uv-picker>
       </uv-form>
     </view>
-    <view class="main">
-      <view class="header">
-        <view class="inspector" v-show="selectedShip.shipId">
-          <image class="img" src="../../static/images/user-icon-3.png"></image>
+    <view v-if="selectedShip.shipId" class="main bg-#f5f5f5 p-2 overflow-hidden">
+      <view class="bg-#fff rounded-1 overflow-auto">
+        <view class="header flex items-center justify-between p-2 rounded-1">
+          <view class="flex items-center justify-start mb-2 w-full" v-show="selectedShip.shipId">
+            <image class="w-12 h-12 mr-4" src="../../static/images/user-icon-3.png"></image>
 
-          <view class="middle">
-            <text class="name">{{ currentShipData?.inspectorName || '暂无核检员' }}</text>
-            <uv-tags class="tag" text="安全员" size="mini" type="success"></uv-tags>
-          </view>
-
-          <tempalte v-if="shipType === 1">
-            <uv-button
-              class="btn"
-              v-if="inspectionStatus === 1"
-              type="primary"
-              text="登船核验"
-              @click="handleInspection"
-            ></uv-button>
-            <uv-button
-              class="btn"
-              v-else
-              type="primary"
-              text="结束登船"
-              :disabled="inspectionStatus === 3"
-              @click="handleEndBoarding"
-            ></uv-button>
-          </tempalte>
-          <template v-else>
-            <uv-button
-              class="btn"
-              v-if="inspectionStatus === 1"
-              type="primary"
-              text="下船核验"
-              @click="handleInspection"
-            ></uv-button>
-            <uv-button
-              class="btn"
-              v-else
-              type="primary"
-              text="结束下船"
-              :disabled="inspectionStatus === 3 || !isAllOffboarded"
-              @click="handleEndOffboarding"
-            ></uv-button>
-          </template>
-        </view>
-      </view>
-      <view class="content">
-        <uv-grid :col="4" :border="false">
-          <uv-grid-item v-for="(person, index) in currentShipData?.users || []" :key="index">
-            <view class="person-item" :class="{ 'gray-out': shipType === 2 && !person.offboarded }">
-              <image class="img" src="../../static/images/user-icon-1.png" />
-              <view class="name">
-                {{ person.userName }}
-              </view>
-              <view
-                v-show="inspectionStatus === 1"
-                class="icon-wrapper"
-                @click="handlePersonAction(person)"
-              >
-                <uv-icon :name="getIconName(person)" size="10" color="#fff"></uv-icon>
-              </view>
+            <view class="flex flex-col justify-between flex-1">
+              <text class="text-4 text-[#1d2129] leading-5">
+                {{ currentShipData?.inspectorName || '暂无核检员' }}
+              </text>
+              <uv-tags
+                class="w-12.5 h-4 mt-1 bg-gray-400"
+                text="安全员"
+                size="mini"
+                type="success"
+              ></uv-tags>
             </view>
-          </uv-grid-item>
-        </uv-grid>
+
+            <tempalte v-if="shipType === 1">
+              <uv-button
+                v-if="inspectionStatus === 1"
+                type="primary"
+                text="登船核验"
+                @click="handleInspection"
+              ></uv-button>
+              <uv-button
+                v-else
+                type="error"
+                text="结束登船"
+                :disabled="inspectionStatus === 3"
+                @click="handleEndBoarding"
+              ></uv-button>
+            </tempalte>
+            <template v-else>
+              <uv-button
+                v-if="inspectionStatus === 1"
+                type="primary"
+                text="下船核验"
+                @click="handleInspection"
+              ></uv-button>
+              <uv-button
+                v-else
+                type="error"
+                text="结束下船"
+                :disabled="inspectionStatus === 3 || !isAllOffboarded"
+                @click="handleEndOffboarding"
+              ></uv-button>
+            </template>
+          </view>
+        </view>
+        <view class="flex-1 mx-2 py-2 overflow-auto border-t">
+          <uv-grid :col="4" :border="false">
+            <uv-grid-item v-for="(person, index) in currentShipData?.users || []" :key="index">
+              <view
+                class="relative flex flex-col items-center p-2 rounded-md"
+                :class="{ 'gray-out': shipType === 2 && !person.offboarded }"
+              >
+                <image class="w-12 h-12" src="../../static/images/user-icon-1.png" />
+                <view class="mt-1 text-4 text-[#4e5969] leading-5">
+                  {{ person.userName }}
+                </view>
+                <view
+                  v-show="inspectionStatus === 2"
+                  class="absolute top-1.5 right-1.5 p-1 rounded-full bg-black/50"
+                  @click="handlePersonAction(person)"
+                >
+                  <uv-icon :name="getIconName(person)" size="10" color="#fff"></uv-icon>
+                </view>
+              </view>
+            </uv-grid-item>
+          </uv-grid>
+        </view>
       </view>
     </view>
 
-    <view v-show="inspectionStatus === 2" class="footer">
-      <uv-button class="btn" type="primary" text="开始核验" @click="handleScan"></uv-button>
+    <view
+      v-show="inspectionStatus === 2"
+      class="absolute bottom-0 left-0 right-0 h-16 flex items-center flex-justify-around bg-white"
+    >
+      <uv-button class="w-35" type="primary" text="开始核检" @click="handleScan"></uv-button>
     </view>
 
     <uv-empty
       v-if="!selectedShip.shipId"
       icon="https://cdn.uviewui.com/uview/empty/data.png"
-      text="请选择核检船舶后再开始核检人员"
+      text="请选择核检船舶后再开始检核人员"
     ></uv-empty>
 
     <uv-modal
@@ -116,7 +127,7 @@
     >
       <view class="slot-content">
         <uv-form
-          :model="formData"
+          :model="personData"
           ref="reasonform"
           :rules="reasonRules"
           label-width="80"
@@ -168,14 +179,6 @@ interface FormDataType {
   remark: string
 }
 
-// TODO
-const formData = reactive<FormDataType>({
-  id: '',
-  result: '', // 1,2,3,4
-  resultText: '',
-  remark: '',
-})
-
 const resultText = computed(() => {
   const action = actions.find((item) => item.type === personData.result)
   return action ? action.name : '' // 如果找不到匹配的 action，则返回空字符串
@@ -194,9 +197,9 @@ const closeModal = () => {
     personData[key] = ''
   })
 }
-const openModal = () => {
-  reasonModal.value.open()
-}
+// const openModal = () => {
+//   reasonModal.value.open()
+// }
 const actions = [
   {
     type: '1',
@@ -222,8 +225,7 @@ const showResultSelect = () => {
 }
 const handleResultSelect = (e) => {
   console.log('e', e)
-  formData.result = e.type
-  formData.resultText = e.name
+  personData.result = e.type
 }
 const shipPicker = ref(null)
 const handleShowShipPicker = () => {
@@ -242,8 +244,6 @@ const selectedShip = reactive({
 })
 
 const inspectionStatus = ref(1) // 是否开始核检: 1未开始，2已开始，3已结束
-const currentStatus = ref(true) // true: 登船核验，false: 下船核验
-
 const currentShipData = computed(() => inspectionStore.getShipData(selectedShip.shipId)) // 当前船详情
 // 是否已下船
 const isAllOffboarded = computed(
@@ -278,43 +278,46 @@ const getShipList = async (params) => {
 
 // 选择船只
 const handleShipConfirm = async (e: any) => {
-  inspectionStore.clearAllShipData() // TODO
+  // inspectionStore.clearAllShipData() // TODO
   selectedShip.shipName = e.value[0].name
   selectedShip.shipId = e.value[0].shipDataId
 
-  if (shipType.value === 1) {
-    searchShipData()
-  } else {
-    const { code, message, result } = await shipUsers(selectedShip)
-    if (code === 200) {
-      if (result) {
-        result.inspector = userInfo.id
-        result.inspectorName = userInfo.name
-        inspectionStore.allShipData[selectedShip.shipId] = result
-      } else {
-        searchShipData()
-      }
+  searchShipData()
+}
+const searchShipData = async () => {
+  const shipData = inspectionStore.getShipData(selectedShip.shipId)
+  if (!shipData) {
+    if (shipType.value === 1) {
+      createShipData()
     } else {
-      useToast(message)
+      const { code, message, result } = await shipUsers(selectedShip)
+      if (code === 200) {
+        if (result) {
+          result.inspector = userInfo.id
+          result.inspectorName = userInfo.name
+          inspectionStore.allShipData[selectedShip.shipId] = result
+        } else {
+          createShipData()
+        }
+      } else {
+        useToast(message)
+      }
     }
   }
 }
-const searchShipData = () => {
-  let shipData = inspectionStore.getShipData(selectedShip.shipId)
-  if (!shipData) {
-    shipData = {
-      shipId: selectedShip.shipId,
-      shipName: selectedShip.shipName,
-      departmentId: userInfo.departmentId,
-      departmentName: userInfo.department,
-      inspector: userInfo.id,
-      inspectorName: userInfo.name,
-      users: [],
-    }
-    // 或创建一个新的  initShipData  方法来初始化船舶数据
-    inspectionStore.allShipData[selectedShip.shipId] = shipData
-    console.log('inspectionStore.allShipData', inspectionStore.allShipData)
+const createShipData = () => {
+  const shipData = {
+    shipId: selectedShip.shipId,
+    shipName: selectedShip.shipName,
+    departmentId: userInfo.departmentId,
+    departmentName: userInfo.department,
+    inspector: userInfo.id,
+    inspectorName: userInfo.name,
+    users: [],
   }
+  // 或创建一个新的  initShipData  方法来初始化船舶数据
+  inspectionStore.allShipData[selectedShip.shipId] = shipData
+  console.log('inspectionStore.allShipData', inspectionStore.allShipData)
 }
 
 const handleInspection = async () => {
@@ -353,9 +356,29 @@ const handleScan = async () => {
       useToast('二维码已失效，请重新生成')
     } else {
       // 二维码有效，继续处理逻辑
-      const numbers = ['1-1', '1-2', '1-3', '1-4', '1-5']
+      const numbers = [
+        '1-1',
+        '1-2',
+        '1-3',
+        '1-4',
+        '1-5',
+        '1-6',
+        '1-7',
+        '1-8',
+        '1-9',
+        '12-1',
+        '12-2',
+        '12-3',
+        '12-4',
+        '12-5',
+        '12-6',
+        '12-7',
+        '12-8',
+        '12-9',
+      ]
       const randomIndex = Math.floor(Math.random() * numbers.length)
       const randomValue = numbers[randomIndex]
+      numbers.splice(randomIndex, 1)
       const person = {
         ...codeParams,
         userId: randomValue || codeParams.userId, // TODO
@@ -415,7 +438,6 @@ const handleEndBoarding = async () => {
     inspectionStore.clearShipData(currentShipData.value.shipId)
   } else {
     useToast(message)
-    inspectionStatus.value = 3 // TODO
   }
 }
 
@@ -438,7 +460,6 @@ const handleEndOffboarding = async () => {
     // uni.navigateBack()
   } else {
     useToast(message)
-    inspectionStatus.value = 3 // TODO
   }
 }
 
@@ -452,117 +473,10 @@ const getIconName = (person: Person) => {
 </script>
 
 <style lang="scss" scoped>
-.page {
-  height: 100%;
-  position: relative;
-}
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-  .title {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  .end-btn {
-    padding: 8px 16px;
-    color: #fff;
-    background-color: #007aff;
-    border-radius: 4px;
-    &.disabled {
-      opacity: 0.5;
-    }
-  }
+  background: linear-gradient(360deg, rgba(157, 214, 255, 0.06) 20%, rgba(50, 84, 255, 0.16) 100%);
 }
-.main {
-  padding: 32rpx 16rpx;
-}
-.inspector {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-  .img {
-    width: 96rpx;
-    height: 96rpx;
-    margin-right: 34rpx;
-  }
-  .middle {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .name {
-    font-size: 32rpx;
-    color: #1d2129;
-    line-height: 40rpx;
-  }
-  .tag {
-    width: 100rpx;
-    height: 32rpx;
-    margin-top: 8rpx;
-  }
-  // .label {
-  //   font-size: 14px;
-  //   color: #666;
-  // }
-  // .value {
-  //   margin-left: 10px;
-  //   font-size: 14px;
-  // }
-}
-.content {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-  .person-item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    &.gray-out {
-      opacity: 0.5;
-    }
-    .img {
-      width: 96rpx;
-      height: 96rpx;
-    }
-    .name {
-      margin-top: 8rpx;
-      font-size: 32rpx;
-      color: #4e5969;
-      line-height: 40rpx;
-    }
-    .icon-wrapper {
-      position: absolute;
-      top: 12rpx;
-      right: 12rpx;
-      padding: 4px;
-      background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 50%;
-    }
-  }
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 128rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #fff;
-  .btn {
-    width: 558rpx;
-  }
+.gray-out {
+  opacity: 0.5;
 }
 </style>

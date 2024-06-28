@@ -1,5 +1,5 @@
 <template>
-  <view class="default-layout h-full">
+  <view class="default-layout h-full bg-#f5f5f5">
     <slot />
   </view>
 </template>

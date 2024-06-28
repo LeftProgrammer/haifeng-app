@@ -8,128 +8,173 @@
 }
 </route>
 <template>
-  <view class="page h-full px-2" :style="{ paddingTop: safeAreaInsets?.top + 'px' }">
-    <view class="main">
-      <view class="header">
-        <view class="avatar">
-          <image class="img" src="../../static/home/avatar.png"></image>
+  <view
+    class="page h-full px-2 pb-5 relative overflow-auto bg-no-repeat bg-center bg-cover"
+    :style="{ paddingTop: safeAreaInsets?.top + 'px' }"
+  >
+    <view class="mt-4">
+      <view class="header flex c-#fff">
+        <view class="avatar w-12 h-12 m-r-3 border-2 border-white rounded-1.5">
+          <image class="w-full h-full rounded-1.5" src="../../static/home/avatar.png"></image>
         </view>
-        <view class="userinfo">
-          <view class="userinfo-header">
+        <view class="userinfo flex flex-col justify-between flex-1">
+          <view class="userinfo-header flex items-center justify-start h-7 text-5">
             <view class="name">你好，{{ userInfo.name }}</view>
-            <!-- <uv-tags class="tags" text="已登船" type="warning" shape="circle"></uv-tags> -->
+            <!-- <uv-tags class="tags ml-4 text-4" text="已登船" type="warning" shape="circle"></uv-tags> -->
           </view>
-          <view class="tip">今日工作辛苦了！</view>
+          <view class="tip text-3.5">今日工作辛苦了！</view>
         </view>
       </view>
-      <view class="info">
-        <view class="info-left" @click="handleGoWeather">
-          <view class="left-top">
-            <view class="img">{{ weatherData?.weatherDescription }}</view>
-            <view class="num">{{ weatherData?.temperature }}</view>
-            <view class="top-right">
-              <view class="text unit">℃</view>
-              <view class="text weather">{{ weatherData?.weatherDescription }}</view>
+      <view class="info flex justify-between h-35 mt-5">
+        <view
+          class="info-left relative p-3 text-white rounded-lg shadow-[0_1_2_0_rgba(37,70,233,0.32)]"
+          @click="handleGoWeather"
+        >
+          <view class="flex items-center">
+            <image class="w-12 h-12" src="../../static/home/weather-1.png"></image>
+            <view class="ml-2.5 text-8">{{ weatherData?.temperature }}</view>
+            <view class="flex flex-col justify-around h-full ml-1.7">
+              <view class="text-3.5">℃</view>
+              <view class="text-3.5">{{ weatherData?.weatherDescription }}</view>
             </view>
           </view>
-          <view class="left-bottom">
-            <view class="bottom-item">
-              <view class="desc">{{ weatherData?.windMark || '无' }}风</view>
-              <view class="value" v-if="weatherData?.windMark">{{ weatherData?.windSpeed }}级</view>
+          <view
+            class="left-bottom absolute top-17 right-0 bottom-0 left-0 flex flex-col justify-between py-2.25 px-3 rounded-lg"
+          >
+            <view class="flex items-center text-3.5">
+              <view class="desc h-6 px-3 leading-6 text-center rounded-md">
+                {{ weatherData?.windMark ? `${weatherData?.windMark}风` : '无' }}
+              </view>
+              <view class="ml-2.5" v-if="weatherData?.windMark">
+                {{ weatherData?.windSpeed }}级
+              </view>
             </view>
-            <view class="bottom-item">
-              <view class="desc">能见度</view>
-              <view class="value">{{ weatherData?.visibility }}km</view>
+            <view class="flex items-center text-3.5">
+              <view class="desc h-6 px-3 leading-6 text-center rounded-md">能见度</view>
+              <view class="ml-2.5">{{ weatherData?.visibility }}km</view>
             </view>
           </view>
         </view>
-        <view class="info-right">
-          <view class="right-item" @click="handleOpenCode">
-            <image class="img" src="../../static/home/avatar.png"></image>
-            <view class="item-right">
-              <view class="desc">我的通行码</view>
-              <view class="tips code">出航请出示</view>
+        <view class="flex flex-1 flex-col justify-between ml-2.5">
+          <view class="flex h-16.5 px-3 py-4 bg-white rounded-lg" @click="handleOpenCode">
+            <image class="w-10 h-10" src="../../static/home/code-icon.png"></image>
+            <view class="flex flex-col justify-between ml-3">
+              <view class="text-4 font-bold leading-5 text-[#1d2129]">我的通行码</view>
+              <view class="mt-0.5 text-3 leading-5 text-[#3254ff]">出航请出示</view>
             </view>
           </view>
-          <view class="right-item">
-            <image class="img" src="../../static/home/avatar.png"></image>
-            <view class="item-right">
-              <view class="desc">出航记录</view>
-              <view class="tips record">已出航23次</view>
+          <view class="flex h-16.5 px-3 py-4 bg-white rounded-lg">
+            <image class="w-10 h-10" src="../../static/home/record-icon.png"></image>
+            <view class="flex flex-col justify-between ml-3">
+              <view class="text-4 font-bold leading-5 text-[#1d2129]">出航记录</view>
+              <view class="mt-0.5 text-3 leading-5 text-[#5ab76f]">已出航23次</view>
             </view>
           </view>
         </view>
       </view>
 
-      <view class="menu">
-        <common-menu :menu-list="menuData" @moreMenu="handleMore" @itemClick="handleItemClick" />
+      <view
+        class="menu p-2.75 mt-2.75 bg-white rounded-1.875 shadow-[0_1_1.375_0_rgba(152,178,244,0.1)]"
+      >
+        <jh-menus :menu-list="menuData" @moreMenu="handleMore" @itemClick="handleItemClick" />
       </view>
 
-      <view class="card">
+      <view class="mt-3">
         <jh-card v-bind="weatherCard">
           <template v-slot:body>
-            <view class="content">
+            <view class="py-3 mx-3 border-b border-[#e5e6eb]">
               <template v-if="extremeWeatherData?.content">
-                <view class="content-header">暴雨橙色预警</view>
-                <view class="content-main">
-                  <uv-read-more show-height="120rpx" :toggle="true" closeText="全文">
+                <view class="text-4 text-[#ff7d00] mb-2">暴雨橙色预警</view>
+                <uv-read-more show-height="130rpx" :toggle="true" closeText="全文">
+                  <view class="text-4 leading-6 text-[#1d2129]">
                     {{ extremeWeatherData?.content }}
-                  </uv-read-more>
-                </view>
-                <view class="content-footer">
+                  </view>
+                </uv-read-more>
+                <view class="text-3.5 text-[#86909c] mt-3">
                   数据来源： {{ extremeWeatherData?.releaseSource }}
                 </view>
               </template>
               <uv-empty
                 v-else
                 mode="data"
+                text="暂无数据"
                 icon="https://cdn.uviewui.com/uview/empty/data.png"
               ></uv-empty>
             </view>
           </template>
 
           <template v-slot:footer>
-            <view class="footer">
-              <view v-if="true" class="btn">预警详情</view>
-              <view v-else class="btn" style="color: #ebedf0">预警详情</view>
+            <view class="w-full h-11.5 flex items-center justify-center">
+              <view v-if="extremeWeatherData?.content" class="text-4 leading-6 text-[#3254ff]">
+                预警详情
+              </view>
+              <view v-else class="text-4 leading-6 text-[#ebedf0]">预警详情</view>
             </view>
           </template>
         </jh-card>
       </view>
-      <view class="card">
+      <view class="mt-3">
         <jh-card v-bind="windShelter">
           <template v-slot:body>
-            <view class="content">
-              <view class="content-main">
-                <uv-read-more show-height="120rpx" :toggle="true" closeText="全文">
-                  {{ windnotifycationData?.content }}
+            <view class="py-3 mx-3 border-b border-[#e5e6eb]">
+              <template v-if="windnotifycationData?.content">
+                <uv-read-more show-height="130rpx" :toggle="true" closeText="全文">
+                  <view class="text-4 leading-6 text-[#1d2129]">
+                    {{ windnotifycationData?.content }}
+                  </view>
                 </uv-read-more>
-              </view>
-              <view class="content-footer">
-                联系人：{{ windnotifycationData?.contactInfo?.name }}
-                {{ windnotifycationData?.contactInfo?.phone }}
-              </view>
+                <view class="text-3.5 text-[#86909c] mt-3">
+                  联系人：{{ windnotifycationData?.contactInfo?.name }}
+                  {{ windnotifycationData?.contactInfo?.phone }}
+                </view>
+              </template>
+              <uv-empty
+                v-else
+                mode="data"
+                text="暂无数据"
+                icon="https://cdn.uviewui.com/uview/empty/data.png"
+              ></uv-empty>
             </view>
           </template>
           <template v-slot:footer>
-            <view class="footer">
-              <view v-if="true" class="btn">避风监控</view>
-              <view v-else class="btn" style="color: #ebedf0">避风监控</view>
+            <view class="w-full h-11.5 flex items-center justify-center">
+              <view
+                v-if="windnotifycationData?.content"
+                class="text-4 leading-6 text-[#3254ff]"
+                @click="handleGo('windnotifycation')"
+              >
+                避风监控
+              </view>
+              <view v-else class="text-4 leading-6 text-[#ebedf0]">避风监控</view>
             </view>
           </template>
         </jh-card>
       </view>
-      <view class="fence card">
+      <view class="mt-3">
         <jh-card v-bind="fence">
           <template v-slot:body>
-            <view class="content">
-              <view class="item" v-for="(item, index) in shipAlarmData" :key="index">
-                <view class="item-left">
-                  <view class="title">{{ item.name }}</view>
-                  <view class="date">{{ dayjs(item.lasttime).format('YYYY-MM-DD HH:mm') }}</view>
+            <view class="py-3 mx-3">
+              <template v-if="shipAlarmData.length > 0">
+                <view
+                  class="flex items-center justify-between pb-2.5 border-b border-[#e5e6eb]"
+                  v-for="(item, index) in shipAlarmData"
+                  :key="index"
+                >
+                  <view class="flex-1">
+                    <view class="text-3.5 text-[#1d2129] leading-5.5">{{ item.name }}</view>
+                    <view class="text-3 text-[#86909c] leading-5">
+                      {{ dayjs(item.lasttime).format('YYYY-MM-DD HH:mm') }}
+                    </view>
+                  </view>
+                  <view class="text-4 text-[#3254ff] leading-6">定位 ></view>
                 </view>
-                <view class="btn">定位 ></view>
-              </view>
+              </template>
+              <uv-empty
+                v-else
+                mode="data"
+                text="暂无数据"
+                icon="https://cdn.uviewui.com/uview/empty/data.png"
+              ></uv-empty>
             </view>
           </template>
         </jh-card>
@@ -139,10 +184,10 @@
 </template>
 
 <script setup>
-import CommonMenu from '@/components/CommonMenu/index.vue'
+import JhMenus from '@/components/jh-menus/index.vue'
 import JhCard from '@/components/jh-card/index.vue'
 import { useToast } from '@/utils/modals/index'
-import { useUserStore } from '@/store'
+import { useAppStore, useUserStore } from '@/store'
 import {
   getRealTimeWeather,
   getExtremeWeather,
@@ -159,48 +204,55 @@ defineOptions({
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 const userInfo = useUserStore().userInfo
+const appStore = useAppStore()
 
-onLoad(() => {})
+const menuData = computed(() => appStore.homeApps)
 
-const menuData = ref([
-  {
-    icon: 'home',
-    text: '避风计划',
-  },
-  {
-    icon: 'star',
-    text: '避风通知',
-    path: '/pages/windShelter/notice/index',
-  },
-  {
-    icon: 'integral',
-    text: '风机施工',
-    path: '/pages/construction/index?type=windTurbine',
-  },
-  {
-    icon: 'star',
-    text: '海缆施工',
-    path: '/pages/construction/index?type=submarineCable',
-  },
-  {
-    icon: 'grid',
-    text: '登船检验',
-    path: '/pages/inspection/index?type=boarding',
-  },
-  {
-    icon: 'grid-fill',
-    text: '下船检验',
-    path: '/pages/inspection/index?type=disembarking',
-  },
-  {
-    icon: 'account',
-    text: '视频监控',
-  },
-  {
-    icon: 'star',
-    text: '气象评估',
-  },
-])
+console.error('menuData', menuData)
+
+onLoad(() => {
+  getData()
+})
+
+// const menuData = ref([
+//   {
+//     icon: 'home',
+//     text: '避风计划',
+//   },
+//   {
+//     icon: 'star',
+//     text: '避风通知',
+//     path: '/pages/windShelter/notice/index',
+//   },
+//   {
+//     icon: 'integral',
+//     text: '风机施工',
+//     path: '/pages/construction/index?type=windTurbine',
+//   },
+//   {
+//     icon: 'star',
+//     text: '海缆施工',
+//     path: '/pages/construction/index?type=submarineCable',
+//   },
+//   {
+//     icon: 'grid',
+//     text: '登船检验',
+//     path: '/pages/inspection/index?type=boarding',
+//   },
+//   {
+//     icon: 'grid-fill',
+//     text: '下船检验',
+//     path: '/pages/inspection/index?type=disembarking',
+//   },
+//   {
+//     icon: 'account',
+//     text: '视频监控',
+//   },
+//   {
+//     icon: 'star',
+//     text: '气象评估',
+//   },
+// ])
 
 const handleGoWeather = () => {
   uni.navigateTo({
@@ -324,287 +376,39 @@ const getData = () => {
     }
   })
 }
-onShow(() => {
-  getData()
-})
+
+const handleGo = (type) => {
+  switch (key) {
+    case 'extremeWeatherData':
+      uni.navigateTo({ url: '' })
+      break
+    case 'windnotifycationData':
+      uni.navigateTo({ url: '' })
+      break
+    case 'shipAlarmData':
+      uni.navigateTo({ url: '' })
+      break
+  }
+}
+// onShow(() => {
+//   getData()
+// })
 </script>
 
 <style lang="scss" scoped>
 .page {
-  position: relative;
-  overflow: auto;
   background-image: url('@/static/home/banner.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% 100%;
-}
-
-.main {
-  padding: 20rpx;
-  margin-top: 40rpx;
-}
-
-.header {
-  display: flex;
-  color: #fff;
-
-  .avatar {
-    width: 96rpx;
-    height: 96rpx;
-    margin-right: 24rpx;
-    border: 4rpx solid #ffffff;
-    border-radius: 12rpx 12rpx 12rpx 12rpx;
-  }
-
-  .img {
-    width: 100%;
-    height: 100%;
-    border-radius: 12rpx 12rpx 12rpx 12rpx;
-  }
-
-  .userinfo {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .userinfo-header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    height: 56rpx;
-    font-size: 40rpx;
-
-    .tags {
-      margin-left: 32rpx;
-      font-size: 32rpx;
-    }
-  }
-
-  .tip {
-    font-size: 28rpx;
-  }
 }
 
 .info {
-  display: flex;
-  justify-content: space-between;
-  height: 280rpx; // 140 * 2
-  margin-top: 44rpx; // 22 * 2
-
   .info-left {
-    // height: 100%;
-    // width: 362rpx; // 181 * 2
-    // flex-shrink: 0;
-    position: relative;
-    padding: 24rpx 40rpx; // 12 * 2 20 * 2
-    color: #fff;
     background: linear-gradient(180deg, #4b88ff 0%, #2041e4 100%);
-    border-radius: 8rpx 8rpx 8rpx 8rpx; // 4 * 2
-    box-shadow: 0rpx 8rpx 16rpx 0rpx rgba(37, 70, 233, 0.32); // 0 * 2 4 * 2 8 * 2
-
-    .left-top {
-      display: flex;
-      align-items: center;
-    }
-
-    .img {
-      width: 96rpx; // 48 * 2
-      height: 96rpx; // 48 * 2
-    }
-
-    .num {
-      margin-left: 32rpx; // 16 * 2
-      font-size: 64rpx; // 32 * 2
-    }
-
-    .top-right {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      height: 100%;
-      margin-left: 14rpx; // 7 * 2
-
-      .text {
-        font-size: 28rpx; // 14 * 2
-      }
-    }
-
-    .left-bottom {
-      position: absolute;
-      top: 136rpx; // 68 * 2
-      right: 0;
-      bottom: 0;
-      left: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      // z-index: 10;
-      padding: 18rpx 40rpx; // 9 * 2 20 * 2
-      // height: 144rpx; // 72 * 2
-      background: linear-gradient(180deg, #ffffff 0%, #267fe6 100%);
-      border-radius: 8rpx 8rpx 8rpx 8rpx; // 4 * 2
-
-      .bottom-item {
-        display: flex;
-        align-items: center;
-        font-size: 28rpx; // 14 * 2
-      }
-
-      .desc {
-        height: 48rpx; // 24 * 2
-        padding: 0 12rpx; // 0 6 * 2
-        line-height: 48rpx; // 24 * 2
-        text-align: center;
-        background: rgba(255, 255, 255, 0.25);
-        border-radius: 4rpx 4rpx 4rpx 4rpx; // 2 * 2
-      }
-
-      .value {
-        margin-left: 24rpx; // 12 * 2
-      }
-    }
   }
-
-  .info-right {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-left: 20rpx; // 10 * 2
-
-    .right-item {
-      display: flex;
-      // width: 100%;
-      height: 132rpx; // 42 * 2
-      padding: 24rpx 16rpx; // 12 * 2 8 * 2
-      background: #ffffff;
-      border-radius: 8rpx; // 4 * 2
-
-      .img {
-        width: 80rpx; // 40 * 2
-        height: 80rpx; // 40 * 2
-        border-radius: 28rpx; // 14 * 2
-      }
-
-      .item-right {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin-left: 24rpx; // 12 * 2
-      }
-
-      .desc {
-        font-size: 32rpx; // 16 * 2
-        font-weight: bold;
-        line-height: 40rpx; // 20 * 2
-        color: #1d2129;
-      }
-
-      .tips {
-        font-size: 24rpx; // 12 * 2
-        line-height: 40rpx; // 20 * 2
-      }
-      .code {
-        color: #3254ff;
-      }
-      .record {
-        color: #5ab76f;
-      }
-    }
+  .left-bottom {
+    background: linear-gradient(180deg, #ffffff 0%, #267fe6 100%);
   }
-}
-
-.menu {
-  padding: 22rpx;
-  margin-top: 22rpx;
-  background: #ffffff;
-  border-radius: 15rpx 15rpx 15rpx 15rpx;
-  box-shadow: 0rpx 8rpx 11rpx 0rpx rgba(152, 178, 244, 0.1);
-}
-
-.card {
-  margin-top: 24rpx;
-
-  .content {
-    padding: 20rpx 24rpx 0;
-
-    .content-header {
-      font-size: 32rpx;
-      color: #ff7d00;
-      margin-bottom: 16rpx;
-    }
-
-    .content-main {
-      .uv-read-more__content {
-        height: auto !important;
-      }
-
-      .uv-read-more__content__inner {
-        font-size: 32rpx;
-        color: #1d2129;
-        line-height: 48rpx;
-      }
-    }
-
-    .content-footer {
-      font-size: 28rpx;
-      color: #86909c;
-      padding-top: 32rpx;
-      padding-bottom: 24rpx;
-      border-bottom: 2rpx solid #e5e6eb;
-    }
-  }
-
-  .footer {
-    width: 100%;
-    height: 92rpx;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .btn {
-      font-size: 32rpx;
-      color: #3254ff;
-    }
-  }
-}
-
-.fence {
-  .content {
-    padding: 20rpx 24rpx 32rpx;
-
-    .item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 20rpx;
-      border-bottom: 2rpx solid #e5e6eb;
-    }
-
-    .item-left {
-      flex: 1;
-    }
-
-    .title {
-      font-size: 28rpx;
-      color: #1d2129;
-      line-height: 44rpx;
-    }
-
-    .date {
-      font-size: 24rpx;
-      color: #86909c;
-      line-height: 40rpx;
-    }
-
-    .btn {
-      font-size: 32rpx;
-      color: #3254ff;
-      line-height: 48rpx;
-    }
+  .desc {
+    background: rgba(255, 255, 255, 0.25);
   }
 }
 </style>

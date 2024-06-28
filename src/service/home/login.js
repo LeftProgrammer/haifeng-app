@@ -10,7 +10,7 @@ export const login = (data) => {
 // 获取人员
 export const queryByUsername = (data) => {
   return http({
-    url: `/personmanagement/personInfo/queryByUsername`,
+    url: `/person/personInfo/queryByUsername`,
     method: 'GET',
     data,
   })

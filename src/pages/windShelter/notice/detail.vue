@@ -7,8 +7,14 @@
 </route>
 
 <template>
-  <view class="page bg-#f5f5f5 h-full pa-4 flex flex-col">
-    <uv-form :model="formData" ref="form" :rules="rules" label-width="100" class="flex-grow-1">
+  <view class="bg-#f5f5f5 h-full box-border relative overflow-hidden">
+    <uv-form
+      :model="formData"
+      ref="form"
+      :rules="rules"
+      label-width="100"
+      class="px-4 bg-white overflow-auto"
+    >
       <uv-form-item label="通知编号" prop="code" borderBottom required>
         <uv-input v-model="formData.code" border="none" :disabled="isViewMode" />
       </uv-form-item>
@@ -135,25 +141,17 @@
         />
       </uv-form-item>
     </uv-form>
-    <view class="footer">
-      <uv-button
-        class="btn"
-        v-if="formData.state === 0"
-        type="primary"
-        :plain="true"
-        @click="submitForm('save')"
-      >
-        保存草稿
-      </uv-button>
-      <uv-button
-        class="btn"
-        v-if="formData.state === 0"
-        type="primary"
-        @click="submitForm('release')"
-      >
-        发布
-      </uv-button>
-      <uv-button class="btn" v-if="formData.state === 1" type="primary" @click="submitForm('end')">
+    <view
+      class="absolute bottom-0 left-0 right-0 h-16 flex items-center flex-justify-around bg-white z-10"
+      v-if="[0, 1].includes(formData.state)"
+    >
+      <template v-if="formData.state === 0">
+        <uv-button class="w-35" type="primary" :plain="true" @click="submitForm('save')">
+          保存草稿
+        </uv-button>
+        <uv-button class="w-35" type="primary" @click="submitForm('release')">发布</uv-button>
+      </template>
+      <uv-button class="w-35" v-if="formData.state === 1" type="primary" @click="submitForm('end')">
         结束避风
       </uv-button>
     </view>
@@ -470,13 +468,3 @@ const submitForm = async (type) => {
   // })
 }
 </script>
-<style lang="scss">
-.footer {
-  display: flex;
-  align-content: center;
-  justify-content: space-around;
-  .btn {
-    width: 264rpx;
-  }
-}
-</style>

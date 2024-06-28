@@ -154,7 +154,7 @@ const longTap = () => {
 <style lang="scss" scoped>
 .new-card {
   box-sizing: border-box;
-  margin: 0 30rpx;
+  // margin: 0 30rpx;
   overflow: hidden;
   font-size: 28rpx;
   background-color: #fff;
@@ -162,10 +162,10 @@ const longTap = () => {
   box-shadow: 0 0 10rpx #eee;
 }
 
-.card-full {
-  margin: 0 !important;
-  // border-radius: 0 !important;
-}
+// .card-full {
+//   margin: 0 !important;
+//   // border-radius: 0 !important;
+// }
 
 .card-full::after {
   border-radius: 0 !important;
@@ -199,6 +199,9 @@ const longTap = () => {
   flex: 1;
   flex-direction: column;
   justify-content: space-between;
+}
+.header-right {
+  flex-shrink: 0;
 }
 
 .header-thumb {

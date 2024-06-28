@@ -6,9 +6,9 @@
 }
 </route>
 <template>
-  <view class="Box bg-#f5f5f5 h-100% pt-2.5">
+  <view class="Box bg-#f5f5f5 h-100% py-2.5 overflow-auto">
     <view
-      class="mx-2 mt-2 border-rd-2 p-4 weather-info mb-2.5"
+      class="mx-2 border-rd-2 p-4 weather-info mb-2.5"
       :style="{
         backgroundImage: `url(../../static/weather/img/${weatherBg(nowWeather.weatherCode)}.png)`,
       }"

@@ -38,3 +38,10 @@ export const noticeSetEnd = (data) => {
     data,
   })
 }
+export const noticeDelete = (data) => {
+  return http({
+    url: `/windmanagement/windNotification/delete`,
+    method: 'DELETE',
+    data,
+  })
+}

@@ -8,7 +8,7 @@
 </route>
 
 <template>
-  <view class="px-2.5 pt-3.5 h-100% box">
+  <view class="px-2.5 py-3.5 h-100% box overflow-auto">
     <view class="bg-white border-rd-2 pt-3 px-1 pb-1 mb-2.5">
       <view class="font-size-8 line-height-11 color-#1d2129 mb-1.5 text-center">
         {{ userInfo.realname }}

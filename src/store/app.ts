@@ -15,6 +15,7 @@ export interface ModuleItem {
 }
 
 export interface AppState {
+  allApps: ModuleItem[]
   homeApps: AppItem[]
   editingHomeApps: AppItem[]
 }
@@ -22,36 +23,44 @@ export interface AppState {
 export const useAppStore = defineStore(
   'app',
   () => {
+    const allApps = ref<ModuleItem[]>([])
     const homeApps = ref<AppItem[]>([])
-    const editingHomeApps = ref<AppItem[]>([])
+
+    const setAllApps = (newAllApps: ModuleItem[]) => {
+      allApps.value = newAllApps
+    }
+    const clearAllApps = () => {
+      allApps.value = []
+    }
 
     const addHomeApp = (app: AppItem) => {
-      editingHomeApps.value.push(app)
+      homeApps.value.push(app)
     }
 
     const removeHomeApp = (id: string | number) => {
       const index = homeApps.value.findIndex((app) => app.id === id)
       if (index !== -1) {
-        editingHomeApps.value.splice(index, 1)
+        homeApps.value.splice(index, 1)
       }
-    }
-
-    const updateEditingHomeApps = (newHomeApps: AppItem[]) => {
-      editingHomeApps.value = newHomeApps
     }
 
     const updateHomeApps = (newHomeApps: AppItem[]) => {
       homeApps.value = newHomeApps
-      // pinia-plugin-persistedstate 会自动将修改同步到缓存
+    }
+
+    const clearHomeApps = () => {
+      homeApps.value = []
     }
 
     return {
+      allApps,
       homeApps,
-      editingHomeApps,
+      setAllApps,
+      clearAllApps,
       addHomeApp,
       removeHomeApp,
       updateHomeApps,
-      updateEditingHomeApps,
+      clearHomeApps,
     }
   },
   {

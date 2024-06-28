@@ -8,3 +8,11 @@ export const getWeather = (data) => {
     query: data,
   })
 }
+// 获取天气预警
+export const getWeatherWarn = (data) => {
+  return http({
+    url: `/sea/extremeWeather/list`,
+    method: 'GET',
+    query: data,
+  })
+}
